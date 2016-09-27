@@ -11,10 +11,9 @@ $RequestHeader = $WebhookData.RequestHeader
 "Webhook header: $($RequestHeader)"
 
 $connectionName = "AzureRunAsConnection"
-$SubId = Get-AutomationVariable -Name 'SubscriptionId'
 try
 {
-   # Get the connection "AzureRunAsConnection "
+   # Get the connection
    $servicePrincipalConnection = Get-AutomationConnection -Name $connectionName         
 
    "Logging in to Azure..."
@@ -22,9 +21,9 @@ try
      -ServicePrincipal `
      -TenantId $servicePrincipalConnection.TenantId `
      -ApplicationId $servicePrincipalConnection.ApplicationId `
-     -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint
+     -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint | Out-Null
    "Setting context to a specific subscription"  
-   Set-AzureRmContext -SubscriptionId $SubId             
+   Set-AzureRmContext -SubscriptionId $servicePrincipalConnection.SubscriptionId | Out-Null
 }
 catch {
     if (!$servicePrincipalConnection)
