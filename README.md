@@ -88,7 +88,7 @@ The setup is done. In the runbook click the webhook tab and create a webhook. Yo
 
 ```
 $postParams = @{
-    Text = "testing 123"
+    text = "testing 123"
 }
 
 $WebhookURI = "https://s2events.azure-automation.net/webhooks?token=YOURTOKEN"
@@ -99,6 +99,7 @@ Invoke-WebRequest -Uri $WebhookURI -Method POST -Body ($postParams | ConvertTo-J
 It may take 5-10 minutes before the data is searchable in OMS Log Analytics.
 
 Note that the runbook is customized for Slack. This means that if you link a Slack channel to the runbook webhook it will extract some data from the payload and put into Log Analytics.
+This also affects which properties are extracted from the payload and forwarded to Log Analytics.
 
 You should see the runbook complete with no errors, and the Azure Function App function to complete with no errors also.
 

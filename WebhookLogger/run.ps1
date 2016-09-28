@@ -2,6 +2,10 @@
 
 $VaultName = "AFWLKV"
 
+# Specify the name of the record type that you'll be creating
+# the resulting type will be called $LogType_CL (CL for Custom Log)
+$LogType = "Webhook"
+
 #region functions
 
 # this function is not currently in use. It is written by (I believe) http://www.xipher.dk/WordPress/
@@ -153,9 +157,6 @@ $CustomerId = Get-AzureKeyVaultSecret -VaultName $VaultName -Name OMSWorkspaceID
 
 # Replace with your Primary Key
 $SharedKey = Get-AzureKeyVaultSecret -VaultName $VaultName -Name OMSWorkspaceKey | Select-Object -ExpandProperty SecretValueText -ErrorAction Stop
-
-# Specify the name of the record type that you'll be creating
-$LogType = "Webhook"
 
 # Specify a time in the format YYYY-MM-DDThh:mm:ssZ to specify a created time for the records
 $TimeStampField = "YYYY-MM-DDThh:mm:ssZ";
