@@ -42,11 +42,16 @@ catch {
      }
 }
 
+"logged into Azure!"
+
 # https://www.powershellgallery.com/packages/AzureRM.KeyVault/2.1.0
+"importing AzureRM.KeyVault..."
 Import-Module -Name "AzureRM.KeyVault"
-$whlAppId        = (Get-AzureKeyVaultSecret -VaultName webhooks -Name whlAppId -ErrorAction Stop).SecretValueText
-$whlAppSecret    = (Get-AzureKeyVaultSecret -VaultName webhooks -Name whlAppSecret -ErrorAction Stop).SecretValueText
-$WebhookURI      = (Get-AzureKeyVaultSecret -VaultName webhooks -Name webhookloggeruri -ErrorAction Stop).SecretValueText
+$whlAppId        = (Get-AzureKeyVaultSecret -VaultName $VaultName -Name whlAppId -ErrorAction Stop).SecretValueText
+$whlAppSecret    = (Get-AzureKeyVaultSecret -VaultName $VaultName -Name whlAppSecret -ErrorAction Stop).SecretValueText
+$WebhookURI      = (Get-AzureKeyVaultSecret -VaultName $VaultName -Name webhookloggeruri -ErrorAction Stop).SecretValueText
+
+"Retrieved secrets from key vault"
 
 <#
 "$tenantId"
@@ -75,6 +80,8 @@ $postParams = @{
         }
     )
 }
+
+"Configured payload"
 
 $Response = Invoke-WebRequest -Uri $WebhookURI -Method POST -Body ($postParams | ConvertTo-Json) -ContentType "application/json" -UseBasicParsing | Select-Object -ExpandProperty Content
 "Response`n$Response"

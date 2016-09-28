@@ -36,6 +36,7 @@ Details on how to setup is found [here](./AzureAutomation/README.md).
 ### Key Vault
 
 The Azure Automation service principal must be added to the *access policies* in the Key vault and have at least *get* in the *secret permissions*.
+It is named `<automation account name>_guid`.
 
 ### Function App
 
@@ -56,6 +57,15 @@ Select *configure* and in the *keys* pane create a new key. Save this to the key
 - whlAppId
 - whlAppSecret
 
+And when you are in there give the newly created app *get* permission on secrets.
+
+### OMS workspace
+
+Create an OMS workspace. When deployed, go to the OMS portal. Go to *settings*, *connected sources* and copy the workspace ID and primary key to the key vault naming them as follows:
+
+- OMSWorkspaceID
+- OMSWorkspaceKey
+
 ## host.json
 
 When integrating an Azure Functions App with Github, this file tells it that we have a function in the folder *WebhookLogger*:
@@ -67,3 +77,17 @@ When integrating an Azure Functions App with Github, this file tells it that we 
 ``
 
 We also provide an ID which should be unique for production purposes, but for testing it does not really matter.
+
+## Action!
+
+The setup is done. In the runbook click the webhook tab and create a webhook. You can try it out with the following code:
+
+```
+$postParams = @{
+    Param1 = "testing 123"
+}
+
+$WebhookURI = "https://s2events.azure-automation.net/webhooks?token=YOURTOKEN"
+
+Invoke-WebRequest -Uri $WebhookURI -Method POST -Body ($postParams | ConvertTo-Json) -ContentType "application/json"
+```

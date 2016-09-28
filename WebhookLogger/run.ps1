@@ -1,5 +1,7 @@
 #requires -Version 3.0
 
+$VaultName = "AFWLKV"
+
 #region functions
 
 # this function is not currently in use. It is written by (I believe) http://www.xipher.dk/WordPress/
@@ -147,10 +149,10 @@ catch [System.Exception]
 #Print-Response -Out "Logged in as service principal"
 
 # Replace with your Workspace ID
-$CustomerId = Get-AzureKeyVaultSecret -VaultName webhooks -Name CustomerId | Select-Object -ExpandProperty SecretValueText -ErrorAction Stop
+$CustomerId = Get-AzureKeyVaultSecret -VaultName $VaultName -Name OMSWorkspaceID | Select-Object -ExpandProperty SecretValueText -ErrorAction Stop
 
 # Replace with your Primary Key
-$SharedKey = Get-AzureKeyVaultSecret -VaultName webhooks -Name SharedKey | Select-Object -ExpandProperty SecretValueText -ErrorAction Stop
+$SharedKey = Get-AzureKeyVaultSecret -VaultName $VaultName -Name OMSWorkspaceKey | Select-Object -ExpandProperty SecretValueText -ErrorAction Stop
 
 # Specify the name of the record type that you'll be creating
 $LogType = "Webhook"
