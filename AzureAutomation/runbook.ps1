@@ -69,8 +69,8 @@ foreach($Pair in $RequestBody.Split("&"))
 
 $postParams = @{
     tenantId = $tenantId
-    appPrincipalId = $appPrincipalId
-    appPrincipalKey = $appPrincipalKey
+    appPrincipalId = $whlAppId
+    appPrincipalKey = $whlAppSecret
     OMSLogAnalyticsPayload = @(
         @{
             Text = $Hash.text

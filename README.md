@@ -66,6 +66,10 @@ Create an OMS workspace. When deployed, go to the OMS portal. Go to *settings*, 
 - OMSWorkspaceID
 - OMSWorkspaceKey
 
+The key vault secrets should now look like this
+
+![alt text](./KVSecrets.PNG)
+
 ## host.json
 
 When integrating an Azure Functions App with Github, this file tells it that we have a function in the folder *WebhookLogger*:
@@ -91,3 +95,11 @@ $WebhookURI = "https://s2events.azure-automation.net/webhooks?token=YOURTOKEN"
 
 Invoke-WebRequest -Uri $WebhookURI -Method POST -Body ($postParams | ConvertTo-Json) -ContentType "application/json"
 ```
+
+It may take 5-10 minutes before the data is searchable in OMS Log Analytics.
+
+Note that the runbook is customized for Slack. This means that if you link a Slack channel to the runbook webhook it will extract some data from the payload and put into Log Analytics.
+
+You should see the runbook complete with no errors, and the Azure Function App function to complete with no errors also.
+
+![alt text](./FuncApplog01.PNG)

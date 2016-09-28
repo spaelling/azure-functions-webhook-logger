@@ -10,7 +10,7 @@ I am not entirely sure, but the method can be both *POST* and *GET*. To me it ma
 
 ## run.ps1
 
-This code is automatically imported into an Azure Functions App function. The file must be named run.ps1 in order for this to work.
+This code is automatically imported into an Azure Functions App function.
 
 This is the code that is run when someone makes a *POST* to the webhook that is generated.
 
