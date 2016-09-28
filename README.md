@@ -46,11 +46,11 @@ Save the function URL (webhook) to your key vault (as a secret), name it *webhoo
 
 Now we need an AAD Application. I found a shortcut for this is to go to *Configure Authentication* then setting *App Service Authentication* to *On*. Select *Azure Active Directory*, then *Express* and change the app name if you like. Click *Ok* and remember to *Save*. Then turn it off again and save because we do not want to require authentication for this app.
 
-![alt text](./AADApp01.PNG)
+![alt text](./Images/AADApp01.PNG)
 
 Now go to the [Classic Portal](https://manage.windowsazure.com/). Select *Active Directory* and select the directory the app was created in. Go to Applications and select the app you just created.
 
-![alt text](./AADApp02.PNG)
+![alt text](./Images/AADApp02.PNG)
 
 Select *configure* and in the *keys* pane create a new key. Save this to the key vault along with the *client id*. Name them as follows:
 
@@ -68,7 +68,7 @@ Create an OMS workspace. When deployed, go to the OMS portal. Go to *settings*, 
 
 The key vault secrets should now look like this
 
-![alt text](./KVSecrets.PNG)
+![alt text](./Images/KVSecrets.PNG)
 
 ## host.json
 
@@ -88,7 +88,7 @@ The setup is done. In the runbook click the webhook tab and create a webhook. Yo
 
 ```
 $postParams = @{
-    Param1 = "testing 123"
+    Text = "testing 123"
 }
 
 $WebhookURI = "https://s2events.azure-automation.net/webhooks?token=YOURTOKEN"
@@ -102,4 +102,4 @@ Note that the runbook is customized for Slack. This means that if you link a Sla
 
 You should see the runbook complete with no errors, and the Azure Function App function to complete with no errors also.
 
-![alt text](./FuncApplog01.PNG)
+![alt text](./Images/FuncApplog01.PNG)
