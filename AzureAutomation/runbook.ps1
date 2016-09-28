@@ -2,6 +2,8 @@
     [object]$WebhookData
 )
 
+$VaultName = "AFWLKV"
+
 $WebhookName = $WebhookData.WebhookName
 $RequestBody = $WebhookData.RequestBody
 $RequestHeader = $WebhookData.RequestHeader
@@ -16,14 +18,18 @@ try
    # Get the connection
    $servicePrincipalConnection = Get-AutomationConnection -Name $connectionName         
 
+   $tenantId = $servicePrincipalConnection.TenantId
+   $ApplicationId = $servicePrincipalConnection.ApplicationId
+   $SubscriptionId = $servicePrincipalConnection.SubscriptionId
+
    "Logging in to Azure..."
    Add-AzureRmAccount `
      -ServicePrincipal `
-     -TenantId $servicePrincipalConnection.TenantId `
-     -ApplicationId $servicePrincipalConnection.ApplicationId `
+     -TenantId $tenantId `
+     -ApplicationId $ApplicationId `
      -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint | Out-Null
    "Setting context to a specific subscription"  
-   Set-AzureRmContext -SubscriptionId $servicePrincipalConnection.SubscriptionId | Out-Null
+   Set-AzureRmContext -SubscriptionId $SubscriptionId | Out-Null
 }
 catch {
     if (!$servicePrincipalConnection)
@@ -38,10 +44,9 @@ catch {
 
 # https://www.powershellgallery.com/packages/AzureRM.KeyVault/2.1.0
 Import-Module -Name "AzureRM.KeyVault"
-$tenantId        = (Get-AzureKeyVaultSecret -VaultName webhooks -Name tenantId -ErrorAction Stop).SecretValueText
-$appPrincipalId  = (Get-AzureKeyVaultSecret -VaultName webhooks -Name weblogAppPrincipalId -ErrorAction Stop).SecretValueText
-$appPrincipalKey = (Get-AzureKeyVaultSecret -VaultName webhooks -Name weblogAppPrincipalKey -ErrorAction Stop).SecretValueText
-$WebhookURI      = (Get-AzureKeyVaultSecret -VaultName webhooks -Name weblogwebhookuri -ErrorAction Stop).SecretValueText
+$whlAppId        = (Get-AzureKeyVaultSecret -VaultName webhooks -Name whlAppId -ErrorAction Stop).SecretValueText
+$whlAppSecret    = (Get-AzureKeyVaultSecret -VaultName webhooks -Name whlAppSecret -ErrorAction Stop).SecretValueText
+$WebhookURI      = (Get-AzureKeyVaultSecret -VaultName webhooks -Name webhookloggeruri -ErrorAction Stop).SecretValueText
 
 <#
 "$tenantId"

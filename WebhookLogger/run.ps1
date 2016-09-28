@@ -1,6 +1,9 @@
 #requires -Version 3.0
 
 #region functions
+
+# this function is not currently in use. It is written by (I believe) http://www.xipher.dk/WordPress/
+# I am  instead expecting strict JSON in the payload
 function ConvertHTTPPost
 {
 	[CmdletBinding()]
