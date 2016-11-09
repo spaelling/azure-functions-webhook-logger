@@ -50,7 +50,7 @@ Now we need an AAD Application. I found a shortcut for this is to go to *Configu
 
 Now go to the [Classic Portal](https://manage.windowsazure.com/). Select *Active Directory* and select the directory the app was created in. Go to Applications and select the app you just created.
 
-![alt text](./Images/AADApp02.PNG)
+![alt text](./Images/AADApp02.png)
 
 Select *configure* and in the *keys* pane create a new key. Save this to the key vault along with the *client id*. Name them as follows:
 
